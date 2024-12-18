@@ -1,0 +1,55 @@
+class Aluno:
+  def __init__(self, nome, matricula):
+    self.__nome_aluno = nome
+    self.__matricula = matricula
+
+  @property
+  def nome(self):
+    return self.__nome_aluno
+
+  @property
+  def matricula(self):
+    return self.__matricula
+
+  def __str__(self):
+    return f'{self.nome}: {self.matricula}'
+
+# Teste aluno:
+aluno1 = Aluno('joao', '20245851')
+
+print(aluno1)
+
+class Curso:
+  def __init__(self, nome, codigo):
+    self.__nome_curso = nome
+    self.__codigo_curso = codigo
+    self.__alunos = []
+
+  def matricula(self, aluno):
+    self.__alunos.append(aluno)
+
+  def excluir_aluno(self, indice):
+    indice-=1
+    self.__alunos.pop(indice)
+
+  def alunos_cursando(self):
+    for aluno in self.__alunos:
+      print(aluno)
+
+
+curso = Curso('Programação orientada a objetos', 'POO_2024.2')
+aluno1 = Aluno('joao', '202401')
+aluno2 = Aluno('maria', '202402')
+aluno3 = Aluno('roberto', '202403')
+
+curso.matricula(aluno1)
+curso.matricula(aluno2)
+curso.matricula(aluno3)
+
+curso.alunos_cursando()
+
+print()
+curso.excluir_aluno(3)
+print('Apos a exclusão do aluno')
+
+curso.alunos_cursando()
