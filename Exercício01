@@ -1,0 +1,171 @@
+"""
+# Questão 01:
+"""
+
+print('Digite dois números inteiros:')
+a = int(input('a:'))
+b = int(input('b:'))
+print(f'Soma: {a + b}')
+print(f'Subtração: {a - b}')
+print(f'Multiplicação: {a * b}')
+print(f'Divisão: {a / b}')
+
+"""# Questão 02:"""
+
+lista= []
+print('Digite 5 numeros:')
+i=0
+while True:
+  if i==5:
+    break
+  else:
+    num = input('numero:')
+    lista.append(num)
+    i+=1
+
+print(max(lista))
+print(min(lista))
+
+"""# Questão 03:"""
+
+def receber_valores():
+  i = range(5)
+  vetor = []
+  for j in i:
+    num = input('Digite numero:')
+    vetor.append(num)
+
+  soma = sum(vetor)
+  return soma
+
+def sum(vetor):
+  soma = 0
+  for i in vetor:
+    soma += int(i)
+  return soma
+
+print('Digite 5 numeros:')
+print(receber_valores())
+
+"""# Questão 04:"""
+
+def media_aritmedica(vetor, n):
+  soma = 0
+  for i in vetor:
+    soma += int(i)
+
+    media = soma / n
+  return media
+
+print('Quantos numeros inteiros você irá digitar?')
+n = int(input('n:'))
+
+i = range(n)
+print('Digite os numeros:')
+vetor = []
+for j in i:
+  num = input('num: ')
+  vetor.append(num)
+
+print(f'A média aritmética é: {media_aritmedica(vetor, n)}')
+
+"""# Questão 05:"""
+
+print('Digite 5 numeros:')
+tam = range(5)
+lista = []
+
+for i in tam:
+  num = int(input(f'Digite o numero {i+1}:'))
+  lista.append(num)
+
+outro = int(input('Digite outro número:'))
+
+for i in tam:
+  if outro == lista[i]:
+    achou = 1
+    break
+  else:
+    achou = 0
+
+if achou == 1:
+  print('Número presente na lista')
+else:
+  print('Número não presente na lista')
+
+"""# Questão 06:"""
+
+def repetidos(lista):
+  vetor = []
+  j=0
+  for i in lista:
+    if j==0:
+      vetor.append(lista[0])
+    else:
+      for q in vetor:
+        if i == q:
+          achou = 1
+          break
+        else:
+          achou = 0
+
+      if achou:
+        continue
+      else:
+        vetor.append(i)
+
+    j+=1
+
+  return vetor
+
+lista = [10,20,30,40,10,50,60,70,10]
+lista2 = repetidos(lista)
+print(lista2)
+
+"""# Questão 07:"""
+
+def repetidos(lista):
+  vetor = []
+  j=0
+  for i in lista:
+    if j==0:
+      vetor.append(lista[0])
+    else:
+      for q in vetor:
+        if i == q:
+          achou = 1
+          break
+        else:
+          achou = 0
+
+      if achou:
+        continue
+      else:
+        vetor.append(i)
+
+    j+=1
+
+  return vetor
+
+def lista_de_repetidos(lista):
+  vetor = []
+  for pos1, i in enumerate(lista):
+    for pos2, q in enumerate(lista):
+      if pos1 != pos2:
+        if i == q:
+          achou = 1
+          break
+        else:
+          achou = 0
+
+    if achou==0:
+      continue
+    else:
+      vetor.append(i)
+      vetor = repetidos(vetor)
+
+  return vetor
+
+lista = [1, 2, 7, 1, 1, 3, 2]
+lista2 = lista_de_repetidos(lista)
+print(lista2)
