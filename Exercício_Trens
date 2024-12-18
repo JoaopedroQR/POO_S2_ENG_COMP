@@ -1,0 +1,133 @@
+
+class Locomotiva:
+  def __init__(self, velocidade_maxima, capacidade_arrasto):
+    self.__velocidade_maxima = velocidade_maxima
+    self.__capacidade_arrasto = capacidade_arrasto
+    self.__peso_vagoes_arrasta = 0
+
+  def velocidade_final(self, velocidade_final):
+    self.__velocidade_maxima = velocidade_final
+
+  def peso_arrastado_final(self, peso_final):
+    self.__peso_vagoes_arrasta = peso_final
+
+  def velocidade(self):
+    return self.__velocidade_maxima
+
+  def __str__(self):
+    return f' L ({self.__velocidade_maxima}/{self.__capacidade_arrasto}/{self.__peso_vagoes_arrasta})'
+
+locomotiva1 = Locomotiva(30, 15000)
+print(locomotiva1)
+
+class Vagao:
+  def __init__(self, carga_solida_liquida, peso_vazio, capacidade_carga):
+    self.__peso_vazio = peso_vazio
+    self.__capacidade_carga = capacidade_carga
+    self.__carga_efetiva_atribuida = 0
+
+    if carga_solida_liquida == 1:
+      self.__tipo_de_carga = 'CS'
+    elif carga_solida_liquida == 2:
+      self.__tipo_de_carga = 'CL'
+
+  def atribuir_carga(self, carga):
+    if carga <= self.__capacidade_carga:
+      self.__carga_efetiva_atribuida += carga
+      return 0
+    else:
+      self.__carga_efetiva_atribuida += self.__capacidade_carga
+      return carga - self.__capacidade_carga
+
+  def peso_vazio(self):
+    return self.__peso_vazio
+
+  def carga_efetiva_atribuida(self):
+    return self.__carga_efetiva_atribuida
+
+  def tipo_de_carga(self):
+    return self.__tipo_de_carga
+
+  def __str__(self):
+    return f' {self.__tipo_de_carga} ({self.__peso_vazio}/{self.__capacidade_carga}/{self.__carga_efetiva_atribuida})'
+
+vagao1 = Vagao(2, 40, 500)
+vagao1.atribuir_carga(400)
+print(vagao1)
+
+class Trem:
+  def __init__(self):
+    self.__locomotivas = []
+    self.__vagoes = []
+
+  def adicionar_elemento(self):
+    print('Digite 1 para adicionar uma locomotiva!')
+    print('Digite 2 para adicionar um vagão!')
+    elemento = int(input(': '))
+
+    if elemento == 1:
+      velocidade = int(input('Digite a velocidade da locomotiva: '))
+      capacidade_arrasto = int(input('Digite a capacidade de arrasto: '))
+      self.__locomotivas.append(Locomotiva(velocidade, capacidade_arrasto))
+
+    elif elemento == 2:
+      print('Digite 1 para carga sólida!!')
+      print('Digite 2 para carga líquida!!')
+      tipo_carga = int(input('Digite o tipo de carga do vagão: '))
+      peso_vazio = int(input('Digite o peso vazio do vagão: '))
+      capacidade_carga = int(input('Digite a capacidade de carga do vagão: '))
+      self.__vagoes.append(Vagao(tipo_carga, peso_vazio, capacidade_carga))
+
+
+  def adicionar_carga(self):
+    print('Digite 1 para carga sólida!')
+    print('Digite 2 para carga líquida!')
+    tipo_carga = int(input('Digite o tipo de carga:'))
+    carga = int(input('Digite a carga: '))
+    if tipo_carga == 1:
+      for i in self.__vagoes:
+        if i.tipo_de_carga() == 'CS':
+          carga = i.atribuir_carga(carga)
+
+    elif tipo_carga == 2:
+      for i in self.__vagoes:
+        if i.tipo_de_carga() == 'CL':
+          carga = i.atribuir_carga(carga)
+
+
+  def velocidade(self):
+    velocidade_fim = 10000
+    for j in self.__locomotivas:
+      if j.velocidade() < velocidade_fim:
+        velocidade_fim = j.velocidade()
+
+    for j in self.__locomotivas:
+      j.velocidade_final(velocidade_fim)
+
+  def pesos_locomotivas(self):
+    peso_total = 0
+    for i in self.__vagoes:
+      peso_total += (i.peso_vazio() + i.carga_efetiva_atribuida())
+
+    peso_por_locomotiva = peso_total/len(self.__locomotivas)
+
+    for j in self.__locomotivas:
+      j.peso_arrastado_final(peso_por_locomotiva)
+
+  def informacoes_trem(self):
+    for j in self.__locomotivas:
+      print(j, sep='', end='')
+
+    for i in self.__vagoes:
+      print(i, sep='', end='')
+
+trem1 = Trem()
+trem1.adicionar_elemento()
+trem1.adicionar_elemento()
+trem1.adicionar_elemento()
+trem1.adicionar_elemento()
+trem1.adicionar_carga()
+trem1.adicionar_carga()
+trem1.velocidade()
+trem1.pesos_locomotivas()
+trem1.informacoes_trem()
