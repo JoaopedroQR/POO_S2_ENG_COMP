@@ -1,0 +1,173 @@
+'''
+
+Nomes dos integrantes do grupo:
+1:  João Pedro Queiroz Rodrigues
+2:  Tiago de Oliveira Endo Marques
+
+
+QUESTÃO 1.
+Criar a uma classe para representar elevadores.
+Os atributos da classe devem ser:
+    - o menor andar que o elevador alcança.
+    - o maior andar que o elevador alcança.
+    - o andar atual.
+    - indicador de porta fechada.
+
+Ao criarmos um objeto da classe Elevador informamos o menor andar e o maior
+andar que o elevador deverá percorrer, o andar atual será inicializado com
+o mesmo valor do menor andar e a porta está inicialmente aberta.  Por exemplo,
+um elevador poderá ir do andar -2 ao 10.
+
+Os métodos da classe Elevador devem ser:
+  - __init__()  : recebe os valores do menor e do maior andar.
+  - subir_andar() : sobe 1 andar caso a porta esteja fechada.
+  - descer_andar() : desce 1 andar caso a porta esteja fechada.
+  - obter_andar() : retorna o andar atual.
+  - abrir_porta() : abre a porta.
+  - fechar_porta() : fecha a porta.
+
+Obedeça os princípios de boa programação usando encapsulamento.
+Os atributos devem ser todos privados. Os métodos devem ser públicos.
+'''
+class Elevador:
+  def __init__(self, menor_andar, maior_andar):
+    self.__menor_andar = menor_andar
+    self.__maior_andar = maior_andar
+    self.__porta_aberta = True
+    self.__andar = self.__menor_andar
+
+  def abrir_porta(self):
+    if self.__porta_aberta == False:
+      self.__porta_aberta = True
+      return self.__porta_aberta
+
+  def fechar_porta(self):
+    if self.__porta_aberta == True:
+      self.__porta_aberta = False
+      return self.__porta_aberta
+
+  def obter_andar(self):
+    return self.__andar
+
+  def subir_andar(self):
+    if self.__porta_aberta == False:
+      if self.__andar == self.__maior_andar:
+        print('O elevador jà està no maior andar!!!')
+
+      elif self.__andar < self.__maior_andar:
+        self.__andar += 1
+        return self.__andar
+    else:
+      print('A porta está aberta!!')
+
+  def descer_andar(self):
+    if self.__porta_aberta == False:
+      if self.__andar == self.__menor_andar:
+        print('O elevador ja esta no menor andar!!!')
+
+      elif self.__andar > self.__menor_andar:
+        self.__andar -=1
+        return self.__andar
+
+    else:
+      print('A porta está aberta')
+
+'''
+Teste a sua classe com o código abaixo
+
+A saída deve ser:
+o elevador social subiu até o andar 12
+o elevador de serviço está no andar 0
+
+'''
+
+social = Elevador(-2, 12)
+servic = Elevador(-2, 12)
+
+social.fechar_porta()
+
+for subida in range(15):
+  social.subir_andar()
+
+print(f"o elevador social subiu até o andar {social.obter_andar()}")
+
+servic.descer_andar()
+print(f"o elevador de serviço está no andar {servic.obter_andar()}")
+
+'''
+QUESTÃO 2.
+Criar a classe Controle, que controla um conjunto de elevadores em
+um mesmo prédio. Todos os elevadores tem acesso aos mesmos andares.
+
+O único atributo dessa classe é uma lista de elevadores, isto é,
+uma lista de objetos da classe Elevador.
+
+Os métodos são:
+  - __init__() : recebe os valores do número de elevadores, o menor
+                  andar e o maior andar no prédio. Todos os elevadores
+                  tem acesso aos mesmos andares.
+  - chamar_elevador(andar): esse método é executado quando um elevador é
+                  solicitado em um determinado andar. O andar para onde o
+                  elevador deve ir é dado como parâmetro. O controle deve
+                  encontrar o elevador mais próximo, fechar a sua porta,
+                  fazê-lo chegar ao andar desejado (executando os métodos
+                  subir_andar() ou descer_andar() um certo número de vezes)
+                  e abrir a porta.
+  - mostrar_elevadores(): exibe o andar de cada elevador. Já está feito.
+'''
+
+class Controle:
+  def __init__(self, numero_elevadores, menor_andar, maior_andar):
+    self.__elevadores = []
+    self.__menor_andar = menor_andar
+    self.__maior_andar = maior_andar
+
+    self.__andar_atual = menor_andar
+
+    for i in range(numero_elevadores):
+      self.__elevadores.append(Elevador(menor_andar, maior_andar))
+
+  def chamar_elevador(self, andar):
+
+    menor = 1000
+    for i in self.__elevadores:
+      if abs(i.obter_andar() - andar) < menor:
+        menor = abs(i.obter_andar() - andar)
+        elevador = i
+
+    elevador.fechar_porta()
+
+    if elevador.obter_andar() > andar:
+      for descida in range(menor):
+        elevador.descer_andar()
+    elif elevador.obter_andar() < andar:
+      for subida in range(menor):
+        elevador.subir_andar()
+    else:
+      print('o elevador ja esta no andar')
+
+  def mostrar_elevadores(self):
+    for i in range(len(self.__elevadores)):
+      print(f"Elevador {i+1}: andar {self.__elevadores[i].obter_andar()}")
+
+'''
+Teste a sua classe com o código abaixo.
+
+A saída deve ser:
+Elevador 1: andar 7
+Elevador 2: andar 3
+Elevador 3: andar 1
+
+'''
+
+# cria um controle para 3 elevadores
+# em um prédio com andares de 0 a 6.
+controle = Controle(3, 0, 8)
+
+# executa diversas chamadas de elevadores
+controle.chamar_elevador(7)
+controle.chamar_elevador(3)
+controle.chamar_elevador(1)
+
+# mostra a configuração final dos elevadores
+controle.mostrar_elevadores()
