@@ -1,0 +1,102 @@
+class aluno:
+  def __init__(self, nome):
+    self.__nome = nome
+    self.__notas = []
+    self.__faltas = 0
+
+  def obter_notas(self):
+    return self.__notas
+
+  def obter_nome(self):
+    return self.__nome
+
+  def incluir_nota(self, nova_nota):
+    self.__nova_nota = nova_nota
+    self.__notas.append(nova_nota)
+
+  def inc_faltas(self):
+    self.__faltas += 1
+    return self.__faltas
+
+  def obter_faltas(self):
+    return self.__faltas
+
+  def alterar_faltas(self, novas_faltas):
+    self.__faltas = novas_faltas
+    return self.__faltas
+
+  def calcular_media(self):
+    notas = Aluno.obter_notas()
+    self.__media = 0
+    soma = 0
+
+    for i in notas:
+      soma += i
+
+    self.__media = soma/len(notas)
+    return self.__media
+
+  def calcular_media_ponderada(self):
+    soma = 0
+    soma_pesos = 0
+
+    notas = Aluno.obter_notas()
+
+    for i in range(4):
+      soma_pesos += pesos[i]
+
+    for i in range(4):
+      soma += notas[i] * pesos[i]
+
+    self.__media = soma/soma_pesos
+    return self.__media
+
+  def obter_media(self):
+    return self.__media
+
+  def verificar_aprov(self):
+    media = Aluno.obter_media()
+    qtd_faltas = self.__faltas
+    if media >= 7 and qtd_faltas<=10:
+      print('Aprovado!!')
+      return True
+    else:
+      print('Reprovado!!')
+      return False
+
+num_alunos = 3
+alunos = []
+pesos = [2,3,4,5]
+
+print("Digite os nomes dos alunos: ")
+
+for i in range(num_alunos):
+  nome=input("Digite o nome do(a) aluno (a): ")
+  Aluno = aluno(nome)
+  alunos.append(Aluno)
+
+qtd = 4
+
+for Aluno in alunos:
+  Aluno.alterar_faltas(qtd)
+  Aluno.inc_faltas()
+  print(f"Digite as notas do(a) aluno(a) {Aluno.obter_nome()}: ")
+  nota1 = float(input("Digite a primeira nota: "))
+  Aluno.incluir_nota(nota1)
+  nota2 = float(input("Digite a segunda nota: "))
+  Aluno.incluir_nota(nota2)
+  nota3 = float(input("Digite a terceira nota: "))
+  Aluno.incluir_nota(nota3)
+  nota4 = float(input("Digite a quarta nota: "))
+  Aluno.incluir_nota(nota4)
+  qtd += 4
+
+print()
+
+for Aluno in alunos :
+  print(f"Aluno: {Aluno.obter_nome()}")
+  print(f"Média ponderada: {Aluno.calcular_media_ponderada()}")
+  print(f"Média: {Aluno.calcular_media()}")
+  print(f"Faltas do {Aluno.obter_nome()}: {Aluno.obter_faltas()}")
+  Aluno.verificar_aprov()
+  print()
