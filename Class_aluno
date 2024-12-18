@@ -1,0 +1,54 @@
+class aluno:
+  def __init__(self, nome):
+    self.nome = nome
+    self.notas = []
+
+  def atribuir_notas(self, nota1, nota2):
+    self.nota1 = nota1
+    self.nota2 = nota2
+    self.notas.append(nota1)
+    self.notas.append(nota2)
+
+  def incluir_nota(self, nova_nota):
+    self.nova_nota = nova_nota
+    self.notas.append(nova_nota)
+
+  def calcular_media(self):
+    self.media = 0
+    soma = 0
+
+    for i in self.notas:
+      soma += i
+
+    self.media = soma/len(self.notas)
+    return self.media
+
+  def verificar_aprov(self):
+    if self.media >= 7:
+      return True
+    else:
+      return False
+
+num_alunos = 3
+alunos = []
+pesos = [2,3,4,5]
+print("Digite os nomes dos alunos: ")
+for i in range(num_alunos):
+  nome=input("Digite o nome do(a) aluno (a): ")
+  Aluno = aluno(nome)
+  alunos.append(Aluno)
+
+for Aluno in alunos:
+  print(f"Digite as notas do(a) aluno(a) {Aluno.nome}: ")
+  nota1 = float(input("Digite a primeira nota: "))
+  nota2 = float(input("Digite a segunda nota: "))
+  Aluno.atribuir_notas(nota1, nota2)
+  nota3 = float(input("Digite a terceira nota: "))
+  Aluno.incluir_nota(nota3)
+  nota4 = float(input("Digite a quarta nota: "))
+  Aluno.incluir_nota(nota4)
+
+for Aluno in alunos :
+  print(f"Aluno: {Aluno.nome}")
+  print(f"Média: {Aluno.calcular_media()}")
+  print(f"Aprovado: {Aluno.verificar_aprov()}")
