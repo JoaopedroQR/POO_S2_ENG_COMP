@@ -1,0 +1,109 @@
+
+# QUESTÃO 1:
+# Crie uma classe Produto para gerenciar informações de produtos em um estoque,
+# garantindo que os dados sejam consistentes por meio do encapsulamento.
+
+# Requisitos:
+# Atributos privados:
+# __nome (nome do produto).
+# __preco (preço unitário do produto).
+# __quantidade (quantidade em estoque).
+
+# Métodos públicos:
+# adicionar_estoque(quantidade_adicionada): Aumenta a quantidade em estoque
+#                                (apenas se o valor for positivo).
+# retirar_estoque(quantidade_retirada): Diminui a quantidade em estoque
+#                               (apenas se houver estoque suficiente).
+# alterar_preco(novo_preco): Atualiza o preço do produto
+#                               (apenas se o novo preço for positivo).
+# exibir_informacoes(): Exibe o nome, preço e quantidade do produto.
+
+# Não permita acesso direto aos atributos privados fora da classe.
+
+class Produto:
+  def __init__(self, nome, preco, quantidade):
+    self.__nome = nome
+    self.__preco = preco
+    self.__quantidade = quantidade
+
+  def retornar_preco(self):
+    return float(self.__preco)
+
+  def retornar_quantidade(self):
+    return float(self.__quantidade)
+
+  def retornar_nome(self):
+    return self.__nome
+
+  def adicionar_estoque(self, quantidade_adicionada):
+    if quantidade_adicionada > 0:
+      self.__quantidade += quantidade_adicionada
+    else:
+      print('Quantidade nula ou negativa!!!')
+
+    return self.__quantidade
+
+  def retirar_estoque(self, quantidade_retirada):
+    if self.__quantidade >= quantidade_retirada:
+      self.__quantidade -= quantidade_retirada
+    else:
+      print('Não há estoque suficiente!!!')
+      print(f'Estoque atual: {self.__quantidade}')
+    return self.__quantidade
+
+  def alterar_preco(self, novo_preco):
+    self.__preco = novo_preco
+    return self.__preco
+
+  def exibir_informacoes(self):
+    print(f'Nome: {self.__nome}')
+    print(f'Preço: {self.__preco}')
+    print(f'Quantidade: {self.__quantidade}')
+
+  def calcular(self):
+    valor_total = self.__preco * self.__quantidade
+
+    return valor_total
+
+# Cria um produto
+produto1 = Produto("Camiseta", 29.90, 10)
+
+# Exibe as informações iniciais
+produto1.exibir_informacoes()
+print()
+
+# Adiciona itens ao estoque
+produto1.adicionar_estoque(5)
+
+# Retira itens do estoque
+produto1.retirar_estoque(3)
+produto1.retirar_estoque(15) # Tentativa de retirar mais itens do que há em estoque
+
+# Altera o preço do produto
+produto1.alterar_preco(34.90)
+
+# Exibe as informações atualizadas
+produto1.exibir_informacoes()
+
+# QUESTÃO 2.
+#
+# Crie uma lista de 5 produtos e encontre o produto com maior valor total.
+# O valor total de um produto é a sua quantidade multiplicada pelo seu preço.
+#
+
+# Ajuda: cria lista de produtos
+produtos = [ Produto("Sorvete", 3.5, 10),
+             Produto("Refrigerante", 3.0, 150),
+             Produto("Suco", 2.5, 100),
+             Produto("Água", 0.5, 200),
+             Produto("Biscoito", 5.10, 35)
+            ]
+
+# Encontre o produto com maior valor total.
+maior_total = 0
+for produto in produtos:
+  if produto.calcular() > maior_total:
+    maior_total = produto.calcular()
+    nome_maior_total = produto.retornar_nome()
+
+print(f'O produto com maior valor total é: {nome_maior_total}')
