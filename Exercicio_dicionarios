@@ -1,0 +1,180 @@
+# Dicionários em Python:
+
+# listas:
+alunos = ['gil','eva','lia']
+nome = alunos[1]
+for a in alunos:
+  print(a)
+
+# Dicionários:
+notas = {'poo': 10.0, 'CID': 9.5, 'LM': 6.7}
+
+print(notas['LM'])
+for chave in notas.items():
+  print(chave)
+for chave in notas:
+  print(chave)
+for chave in notas:
+  print(notas[chave])
+for chave in notas.values():
+  print(chave)
+
+""" Exemplo 1:"""
+
+# Crie um dicionario que armazene informações sobre um livro, incluindo titulo, autor e ano de publicação. Em seguida, exiba essas informações
+
+titulo = input('Digite o Titulo do livro:')
+autor = input('Digite o autor do livro:')
+ano_de_publicacao= input('Digite o ano de publicação:')
+
+informacoes = {'titulo': titulo, 'autor': autor, 'ano_de_publicacao': ano_de_publicacao}
+
+for chave, valor in informacoes.items():
+  print(f'{chave}: {valor}')
+
+""" Exemplo 2:"""
+
+nome = input('Digite o nome:')
+telefone = input('Digite o telefone:')
+email = input('Digite o e-mail:')
+
+contato = {'nome': nome, 'telefone': telefone, 'e-mail': email}
+
+zap = input('Digite o outro numero: ')
+
+contato['telefone'] = zap
+
+
+for chave, valor in contato.items():
+  print(f'{chave}: {valor}')
+
+""" Exemplo 3:"""
+
+sala = {
+    'aluno1': 10.0,
+    'aluno2': 8.0,
+    'aluno3': 7.0,
+}
+
+
+for chave, valor in sala.items():
+  print(f'{chave}: {valor}')
+
+print('\n')
+sala.pop('aluno2')
+
+for chave, valor in sala.items():
+  print(f'{chave}: {valor}')
+
+""" Exemplo 4:"""
+
+#4. Crie uma funcao que receba uma lista de palavras e conte quantas vezes cada palavra aparece. A funcao deve retornar um dicionario com as palavras como chaves e as contagens como valores.
+
+lista = ['joao', 'joao', 'monteiro', 'monteiro', 'colher', 'machado', 'joao']
+chaves = []
+quantidade = []
+
+for nome in lista:
+  if nome not in chaves:
+    chaves.append(nome)
+
+i = 0
+dicionario = {}
+for nome1 in chaves:
+  i=0
+  for nome2 in lista:
+    if nome1 == nome2:
+      i+=1
+
+  dicionario[nome1] = {i}
+
+for chave, valor in dicionario.items():
+    print(f'{chave} : {valor}')
+
+""" Questão 5:"""
+
+# 5. Crie um dicionario chamado turma onde cada chave é o nome de um aluno e o valor é outro dicionario com as materias e suas respectivas notas. Exiba as notas de cada aluno, incluindo a media de cada um.
+
+turma = {
+    'monteiro': {'md': 7.0, 'cal': 8.5, 'EA': 7.0},
+    'joao' : {'md': 6.0, 'cal': 9.0, 'EA': 7.3},
+    'pedro' : {'md': 5.0, 'cal': 5.5, 'EA': 7.0},
+    }
+soma = 0.0
+media = 0.0
+cont = 0
+for aluno , cadeiras in turma.items():
+  soma = 0
+  cont = 0
+  print(f'aluno:{aluno}')
+  for notas in cadeiras.values():
+    soma += notas
+    cont+=1
+    print(f'Nota{cont}: {notas}')
+
+  media = soma / cont
+  print(f'media: {media:.2f}')
+
+""" QUESTÃO 6:"""
+
+'''
+Crie um dicion ́ario com o nome de cinco produtos e seus pre ̧cos. Pe ̧ca ao usu ́ario para digitar
+o nome de um produto e exiba o pre ̧co, caso o produto exista no dicion ́ario. Se n ̃ao existir,
+exiba uma mensagem informando que o produto n ̃ao foi encontrado.
+'''
+
+mercado = {
+    'banana': 1.50,
+    'detergente': 3.50,
+    'arroz': 5.50,
+    'feijão': 5.50,
+    'abobrinha': 2.50,
+}
+
+while True:
+  produto = input('Digite o nome do produto: ')
+
+  if produto == '0':
+    print('Fechando sistema')
+    break
+
+  try:
+    print(f'preço: {mercado[produto]}')
+  except KeyError:
+    print('Produto não encontrado')
+
+""" QUESTÃO 7:"""
+
+"""
+QUESTÃO 7. Suponha que os preços dos produtos subiram 10%. Crie um programa que atualize todos os valores no dicionário de produtos do exercício anterior
+aplicando um aumento de 10%, e exiba o dicionário atualizado.
+"""
+
+def aumento10porcento(mercado):
+  for chave, valor in mercado.items():
+    mercado[chave] *= 1.1
+
+  return mercado
+
+
+mercado = {
+    'banana': 1.50,
+    'detergente': 3.50,
+    'arroz': 5.50,
+    'feijão': 5.50,
+    'abobrinha': 2.50,
+}
+
+mercado = aumento10porcento(mercado)
+
+while True:
+  produto = input('Digite o nome do produto: ')
+
+  if produto == '0':
+    print('Fechando sistema')
+    break
+
+  try:
+    print(f'preço: {mercado[produto]:.2f}')
+  except KeyError:
+    print('Produto não encontrado')
